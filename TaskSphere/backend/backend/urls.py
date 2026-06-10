@@ -1,0 +1,23 @@
+"""
+URL configuration for backend project.
+"""
+from django.contrib import admin
+from django.urls import path, include
+from django.http import JsonResponse
+
+def api_root(request):
+    return JsonResponse({
+        "name": "TaskSphere API",
+        "version": "1.0.0",
+        "status": "healthy",
+        "endpoints": {
+            "admin": "/admin/",
+            "api-auth": "/api-auth/"
+        }
+    })
+
+urlpatterns = [
+    path('', api_root, name='api-root'),
+    path('admin/', admin.site.urls),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+]
