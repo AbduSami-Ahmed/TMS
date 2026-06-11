@@ -12,8 +12,27 @@ const getAuthHeaders = () => {
 
 export const authService = {
   register: async (username, email, password, passwordConfirm) => {
-    // TODO: implement API post request to /register/
-    console.log('API register called for:', username);
+    const response = await fetch(`${BASE_URL}/register/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username,
+        email,
+        password,
+        password_confirm: passwordConfirm
+      })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      // Throw the response data so the component can handle validation errors
+      throw data;
+    }
+
+    return data;
   },
 
   login: async (username, password) => {
