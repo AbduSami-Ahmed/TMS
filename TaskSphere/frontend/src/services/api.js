@@ -76,23 +76,45 @@ export const authService = {
 
 export const taskService = {
   getTasks: async () => {
-    // TODO: implement API get request to /tasks/
-    console.log('API getTasks called');
-    return [];
+    const response = await fetch(`${BASE_URL}/tasks/`, {
+      method: 'GET',
+      headers: getAuthHeaders()
+    });
+    const data = await response.json();
+    if (!response.ok) throw data;
+    return data;
   },
 
   createTask: async (taskData) => {
-    // TODO: implement API post request to /tasks/
-    console.log('API createTask called:', taskData);
+    const response = await fetch(`${BASE_URL}/tasks/`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+      body: JSON.stringify(taskData)
+    });
+    const data = await response.json();
+    if (!response.ok) throw data;
+    return data;
   },
 
   updateTask: async (id, taskData) => {
-    // TODO: implement API put request to /tasks/{id}/
-    console.log('API updateTask called for id:', id);
+    const response = await fetch(`${BASE_URL}/tasks/${id}/`, {
+      method: 'PUT',
+      headers: getAuthHeaders(),
+      body: JSON.stringify(taskData)
+    });
+    const data = await response.json();
+    if (!response.ok) throw data;
+    return data;
   },
 
   deleteTask: async (id) => {
-    // TODO: implement API delete request to /tasks/{id}/
-    console.log('API deleteTask called for id:', id);
+    const response = await fetch(`${BASE_URL}/tasks/${id}/`, {
+      method: 'DELETE',
+      headers: getAuthHeaders()
+    });
+    if (!response.ok) {
+      const data = await response.json().catch(() => ({}));
+      throw data;
+    }
   }
 };
