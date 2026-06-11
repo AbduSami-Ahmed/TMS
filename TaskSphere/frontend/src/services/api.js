@@ -36,13 +36,41 @@ export const authService = {
   },
 
   login: async (username, password) => {
-    // TODO: implement API post request to /login/
-    console.log('API login called for:', username);
+    const response = await fetch(`${BASE_URL}/login/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ username, password })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw data;
+    }
+
+    if (data.token) {
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('username', data.user.username);
+    }
+
+    return data;
   },
 
   logout: async () => {
-    // TODO: implement API post request to /logout/
-    console.log('API logout called');
+    const response = await fetch(`${BASE_URL}/logout/`, {
+      method: 'POST',
+      headers: getAuthHeaders()
+    });
+
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
+
+    if (!response.ok) {
+      const data = await response.json().catch(() => ({}));
+      throw data;
+    }
   }
 };
 
