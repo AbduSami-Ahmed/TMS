@@ -10,7 +10,6 @@ function App() {
   const [token, setToken] = useState(localStorage.getItem('token'));
 
   useEffect(() => {
-    // Redirect to tasks page if logged in, otherwise go to login
     if (token) {
       setCurrentView('tasks');
     } else {

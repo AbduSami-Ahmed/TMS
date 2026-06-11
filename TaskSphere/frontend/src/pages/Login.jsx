@@ -12,7 +12,6 @@ function Login({ onLoginSuccess }) {
 
     try {
       const data = await authService.login(username, password);
-      // Callback to update the root App component state with the new token
       if (onLoginSuccess) {
         onLoginSuccess(data.token);
       }

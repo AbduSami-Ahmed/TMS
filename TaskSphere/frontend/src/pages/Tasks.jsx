@@ -11,7 +11,6 @@ function Tasks() {
   const [errorMsg, setErrorMsg] = useState('');
   const [loading, setLoading] = useState(true);
 
-  // Fetch tasks when the page loads
   const loadTasks = async () => {
     setLoading(true);
     setErrorMsg('');
@@ -37,17 +36,14 @@ function Tasks() {
 
     try {
       if (editingTaskId) {
-        // Update task
         const updatedTask = await taskService.updateTask(editingTaskId, taskData);
         setTasks(tasks.map(t => t.id === editingTaskId ? updatedTask : t));
         setEditingTaskId(null);
       } else {
-        // Create task
         const newTask = await taskService.createTask(taskData);
         setTasks([...tasks, newTask]);
       }
 
-      // Reset form fields
       setTitle('');
       setDescription('');
       setStatus('To Do');
@@ -108,7 +104,6 @@ function Tasks() {
         </div>
       )}
 
-      {/* Task Creation/Editing Form */}
       <form onSubmit={handleCreateOrUpdateTask} style={{ marginBottom: '30px', padding: '15px', border: '1px solid #ddd', borderRadius: '5px', backgroundColor: '#fff' }}>
         <h3>{editingTaskId ? 'Edit Task' : 'Create New Task'}</h3>
         <div style={{ marginBottom: '10px' }}>
@@ -155,7 +150,6 @@ function Tasks() {
         )}
       </form>
 
-      {/* Task List */}
       <h3>Tasks List</h3>
       {loading ? (
         <p>Loading tasks...</p>
@@ -171,7 +165,6 @@ function Tasks() {
                   <p style={{ margin: 0, color: '#666', fontSize: '14px' }}>{task.description}</p>
                 </div>
                 
-                {/* Inline Status Dropdown */}
                 <select
                   value={task.status}
                   onChange={(e) => handleStatusChange(task, e.target.value)}
@@ -192,7 +185,6 @@ function Tasks() {
                 </select>
               </div>
 
-              {/* Action Buttons */}
               <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
                 <button
                   onClick={() => handleStartEdit(task)}

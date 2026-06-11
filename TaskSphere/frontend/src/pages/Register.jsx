@@ -14,7 +14,6 @@ function Register() {
     setErrors({});
     setSuccessMsg('');
 
-    // Simple password match validation
     if (password !== passwordConfirm) {
       setErrors({ password_confirm: 'Passwords do not match.' });
       return;
@@ -24,13 +23,11 @@ function Register() {
       await authService.register(username, email, password, passwordConfirm);
       setSuccessMsg('Account created successfully! You can now log in.');
       
-      // Clear form
       setUsername('');
       setEmail('');
       setPassword('');
       setPasswordConfirm('');
     } catch (err) {
-      // If server returned structured JSON validation errors
       if (typeof err === 'object') {
         setErrors(err);
       } else {

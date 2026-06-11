@@ -1,7 +1,5 @@
-// API service setup for TaskSphere
 const BASE_URL = 'http://127.0.0.1:8000/api';
 
-// Helper to get auth headers with token
 const getAuthHeaders = () => {
   const token = localStorage.getItem('token');
   return {
@@ -28,7 +26,6 @@ export const authService = {
     const data = await response.json();
 
     if (!response.ok) {
-      // Throw the response data so the component can handle validation errors
       throw data;
     }
 

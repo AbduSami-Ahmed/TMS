@@ -8,9 +8,7 @@ class TaskViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        # Users can only see their own tasks
         return Task.objects.filter(owner=self.request.user)
 
     def perform_create(self, serializer):
-        # Automatically set the owner to the current logged-in user
         serializer.save(owner=self.request.user)
